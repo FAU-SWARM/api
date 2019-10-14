@@ -5,6 +5,9 @@ import logging
 import requests
 from flask import (Blueprint, abort, request, jsonify, Response, session, current_app)
 
+
+from database.models.raw_data import RawData
+
 FILE_DIR = os.path.dirname(__file__)
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
@@ -19,4 +22,5 @@ def raw_data(*args, **kwargs):
     get_params = request.args.to_dict(flat=False)
     method = request.method
 
-
+    if method == 'GET':
+        raw_data = list(RawData.objects)
