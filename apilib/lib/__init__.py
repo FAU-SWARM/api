@@ -18,6 +18,9 @@ from xml.etree.ElementTree import fromstring
 from mongoengine import Document
 from xmljson import badgerfish, parker
 
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
+
 DEFAULT_FORMAT = '%(levelname)s - %(name)s, line %(lineno)d - %(asctime)s: %(message)s'
 ESSENTIAL_FORMAT = '%(levelname)s %(asctime)s - %(name)s, %(funcName)s, line: %(lineno)d - %(message)s '
 VERBOSE_FORMAT = '%(levelname)s - %(processName)s - %(process)d %(funcName)s, line %(lineno)d - %(asctime)s: %(message)s'
@@ -247,4 +250,3 @@ def add_headers(response, headers=[]):
         response.headers.add(*header)
 
     return response
-

@@ -36,12 +36,16 @@ def user(*args, **kwargs):
     error = None
     try:
         if request.method == 'POST':
+            body = request.json
+
             data = User(**body)
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
             data = [obj.to_mongo() for obj in User.objects]
         elif request.method == 'PUT':
+            body = request.json
+
             _id = route_params['user_id']
             data = User.objects(id=bson.ObjectId(_id))
             data.first_name = body['first_name']
@@ -65,4 +69,5 @@ def user(*args, **kwargs):
 
     response = jsonify(message=message, data=data, error=error)
     response = add_headers(response, headers=headers)
+    LOGGER.warning(vars(response))
     return response

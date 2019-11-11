@@ -2,11 +2,13 @@ from __future__ import absolute_import, print_function, division, with_statement
 import os
 import sys
 import traceback
+import logging
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
+
 
 class AugmentedException(Exception):
-    def __init__(
-        self, e, ignore=[], include=[]
-    ):
+    def __init__(self, e, ignore=[], include=[]):
         # type: (Exception, List[str], List[str]) -> AugmentedException
         # we don't super on the Exception and just grind it up into something
         self.inner = None
@@ -81,8 +83,11 @@ class AugmentedException(Exception):
 
     def to_dict(self):
         return dict(
-            type=self.type, traceback=self.traceback, messages=self.messages,
-            inner=self.inner, cause=self.cause,
+            type=self.type,
+            traceback=self.traceback,
+            messages=self.messages,
+            inner=self.inner,
+            cause=self.cause,
         )
 
     def append(self, data):

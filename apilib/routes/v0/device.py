@@ -36,12 +36,16 @@ def device(*args, **kwargs):
     error = None
     try:
         if request.method == 'POST':
+            body = request.json
+
             data = Device(name=body['name'], meta_data=body['meta_data'])
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
             data = [obj.to_mongo() for obj in Device.objects]
         elif request.method == 'PUT':
+            body = request.json
+
             _id = route_params['device_id']
             data = Device.objects(id=bson.ObjectId(_id))
             data.name = body['name']

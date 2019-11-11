@@ -29,21 +29,26 @@ LOGGER.addHandler(logging.NullHandler())
 def main(args):
     # type: (argparse.Namespace) -> None
 
-    console_log([__name__, 'apilib', 'database'], level=args.loglevel)
-    file_log([__name__, 'apilib', 'database'], level=args.loglevel, filename=args.logfile)
+    console_log([__name__, 'flask', 'apilib', 'database'], level=args.loglevel)
+    file_log([__name__, 'flask', 'apilib', 'database'], level=args.loglevel, filename=args.logfile)
 
     app = Flask(__name__)
     app.logger = LOGGER
     app.json_encoder = AllEncoder
 
+    API_ENDPOINT = args.env.api.endpoint
+    API_PORT = args.env.api.port
+    WEB_URI = args.env.website.endpoint
+
     HEADERS = [
         ('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS'),
         ('Access-Control-Allow-Credentials', 'true'),
         ('Access-Control-Allow-Headers', 'Content-Type, Authorization, Credentials'),
-        ('Access-Control-Allow-Origin', '*'),
     ]
-    API_ENDPOINT = args.env.api.endpoint
-    API_PORT = args.env.api.port
+    if args.dev:
+        HEADERS.insert(0, ('Access-Control-Allow-Origin', 'http://localhost:4200'))
+    else:
+        HEADERS.insert(0, ('Access-Control-Allow-Origin', '{}'.format(WEB_URI)))
 
     app.config['args'] = args
     app.config['headers'] = HEADERS
@@ -58,7 +63,7 @@ def main(args):
 
     kwargs = dict(
         port=API_PORT,
-        debug=args.dev and not os.environ.get('PYTHONUNBUFFERED', False),
+        debug=args.debug,
         host='0.0.0.0',
     )
 
@@ -104,6 +109,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     development = parser.add_argument_group()
     development.add_argument('-d', '--dev', action='store_true', help='Enable dev mode.')
+    development.add_argument('--debug', action='store_true', help='Set the flask debug flag hi or low.')
 
     execution = parser.add_argument_group()
     execution.add_argument('-e', '--env', action='store_true', default=os.path.abspath('env.xml'), help='Env XML File')
