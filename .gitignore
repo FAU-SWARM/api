@@ -2,6 +2,7 @@
 # project
 /venv
 *.egg**
+*.pyc
 
 
 # compiled output

@@ -33,6 +33,7 @@ def device(*args, **kwargs):
 
     message = []
     data = None
+    error = None
     try:
         if request.method == 'POST':
             data = Device(name=body['name'], meta_data=body['meta_data'])

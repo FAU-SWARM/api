@@ -1,0 +1,745 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "SWARM API",
+    "description" : "API for the SWARM project. FAU CEN4214 2019F",
+    "version" : "v0"
+  },
+  "servers" : [ {
+    "url" : "http://swarm-fau4214.eastus.cloudapp.azure.com:6969/api/v0",
+    "description" : "Azure VM"
+  } ],
+  "paths" : {
+    "/device" : {
+      "get" : {
+        "tags" : [ "Device" ],
+        "description" : "Read information about a bunch of devices",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "number of records to offset",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "max number of records to return",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "all of the devices",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Device"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Device" ],
+        "description" : "Create a new devce",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Device"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully registered device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Device"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/device/{id}" : {
+      "get" : {
+        "tags" : [ "Device" ],
+        "description" : "Read one device by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "one of the devices",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Device"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Device" ],
+        "description" : "Update one device by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Device"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully updated device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Device"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Device" ],
+        "description" : "Delete one device by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successfully deleted device",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Device"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raw-data" : {
+      "get" : {
+        "tags" : [ "Raw-Data" ],
+        "description" : "Read information about a bunch of raw-datas",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "number of records to offset",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "max number of records to return",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "all of the raw-datas",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Raw-Data"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Raw-Data" ],
+        "description" : "Create a new devce",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Raw-Data"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully registered raw-data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/Raw-Data"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raw-data/{id}" : {
+      "get" : {
+        "tags" : [ "Raw-Data" ],
+        "description" : "Read one raw-data by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "one of the raw-datas",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Raw-Data"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Raw-Data" ],
+        "description" : "Update one raw-data by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Raw-Data"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully updated raw-data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Raw-Data"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Raw-Data" ],
+        "description" : "Delete one raw-data by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successfully deleted raw-data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/Raw-Data"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "description" : "Read information about a bunch of users",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "number of records to offset",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "max number of records to return",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "all of the users",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "User" ],
+        "description" : "Create a new devce",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully registered user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "$ref" : "#/components/schemas/User"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "description" : "Read one user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "one of the users",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "User" ],
+        "description" : "Update one user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successfully updated user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "User" ],
+        "description" : "Delete one user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successfully deleted user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "API-Response" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          },
+          "error" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "Dated-Object" : {
+        "type" : "object",
+        "properties" : {
+          "date_created" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "date_modified" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Raw-Data" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Dated-Object"
+        }, {
+          "properties" : {
+            "raw" : {
+              "type" : "object"
+            },
+            "device" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      },
+      "Device" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Dated-Object"
+        }, {
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "meta" : {
+              "type" : "object"
+            }
+          }
+        } ]
+      },
+      "User" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Dated-Object"
+        }, {
+          "properties" : {
+            "first_name" : {
+              "type" : "string"
+            },
+            "last_name" : {
+              "type" : "string"
+            },
+            "email" : {
+              "type" : "string",
+              "format" : "email"
+            },
+            "password" : {
+              "type" : "string"
+            }
+          }
+        } ]
+      }
+    }
+  }
+}

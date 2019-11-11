@@ -34,6 +34,7 @@ def raw_data(*args, **kwargs):
 
     message = []
     data = None
+    error = None
     try:
         if request.method == 'POST':
             device = Device.objects(_id=body['device_id'])

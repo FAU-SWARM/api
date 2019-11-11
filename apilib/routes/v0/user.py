@@ -33,6 +33,7 @@ def user(*args, **kwargs):
 
     message = []
     data = None
+    error = None
     try:
         if request.method == 'POST':
             data = User(**body)
