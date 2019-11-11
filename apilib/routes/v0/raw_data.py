@@ -37,19 +37,19 @@ def raw_data(*args, **kwargs):
     error = None
     try:
         if request.method == 'POST':
-            device = Device.objects(_id=body['device'])
+            device = Device.objects(id=body['device'])
             data = RawData(raw=body['raw'], device=device)
             data.save()
         elif request.method == 'GET':
             data = list(RawData.objects)
         elif request.method == 'PUT':
             _id = route_params['raw_data_id']
-            data = RawData.objects(_id=bson.ObjectId(_id))
+            data = RawData.objects(id=bson.ObjectId(_id))
             data.raw = body
             data.update()
         elif request.method == 'DELETE':
             _id = route_params['raw_data_id']
-            data = RawData.objects(_id=bson.ObjectId(_id))
+            data = RawData.objects(id=bson.ObjectId(_id))
             data.delete()
         elif request.method == 'OPTIONS':
             pass

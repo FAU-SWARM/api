@@ -42,13 +42,13 @@ def device(*args, **kwargs):
             data = list(Device.objects)
         elif request.method == 'PUT':
             _id = route_params['device_id']
-            data = Device.objects(_id=bson.ObjectId(_id))
+            data = Device.objects(id=bson.ObjectId(_id))
             data.name = body['name']
             data.meta_data = body['meta_data']
             data.update()
         elif request.method == 'DELETE':
             _id = route_params['device_id']
-            data = Device.objects(_id=bson.ObjectId(_id))
+            data = Device.objects(id=bson.ObjectId(_id))
             data.delete()
         elif request.method == 'OPTIONS':
             pass

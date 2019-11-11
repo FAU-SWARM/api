@@ -42,7 +42,7 @@ def user(*args, **kwargs):
             data = list(User.objects)
         elif request.method == 'PUT':
             _id = route_params['user_id']
-            data = User.objects(_id=bson.ObjectId(_id))
+            data = User.objects(id=bson.ObjectId(_id))
             data.first_name = body['first_name']
             data.last_name = body['last_name']
             data.email = body['email']
@@ -50,7 +50,7 @@ def user(*args, **kwargs):
             data.update()
         elif request.method == 'DELETE':
             _id = route_params['user_id']
-            data = User.objects(_id=bson.ObjectId(_id))
+            data = User.objects(id=bson.ObjectId(_id))
             data.delete()
         elif request.method == 'OPTIONS':
             pass
