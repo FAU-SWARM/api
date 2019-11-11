@@ -222,7 +222,7 @@
         }
       }
     },
-    "/raw-data" : {
+    "/raw_data" : {
       "get" : {
         "tags" : [ "Raw-Data" ],
         "description" : "Read information about a bunch of raw-datas",
@@ -309,7 +309,7 @@
         }
       }
     },
-    "/raw-data/{id}" : {
+    "/raw_data/{id}" : {
       "get" : {
         "tags" : [ "Raw-Data" ],
         "description" : "Read one raw-data by ID",
@@ -712,7 +712,7 @@
             "name" : {
               "type" : "string"
             },
-            "meta" : {
+            "meta_data" : {
               "type" : "object"
             }
           }

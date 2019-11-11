@@ -37,7 +37,7 @@ def raw_data(*args, **kwargs):
     error = None
     try:
         if request.method == 'POST':
-            device = Device.objects(_id=body['device_id'])
+            device = Device.objects(_id=body['device'])
             data = RawData(raw=body['raw'], device=device)
             data.save()
         elif request.method == 'GET':
