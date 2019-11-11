@@ -38,8 +38,9 @@ def user(*args, **kwargs):
         if request.method == 'POST':
             data = User(**body)
             data.save()
+            data = data.to_mongo()
         elif request.method == 'GET':
-            data = list(User.objects)
+            data = [obj.to_mongo() for obj in User.objects]
         elif request.method == 'PUT':
             _id = route_params['user_id']
             data = User.objects(id=bson.ObjectId(_id))
@@ -48,6 +49,7 @@ def user(*args, **kwargs):
             data.email = body['email']
             data.password = body['password']
             data.update()
+            data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['user_id']
             data = User.objects(id=bson.ObjectId(_id))

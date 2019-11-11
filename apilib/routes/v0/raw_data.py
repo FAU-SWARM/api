@@ -39,13 +39,15 @@ def raw_data(*args, **kwargs):
         if request.method == 'POST':
             data = RawData(raw=body['raw'], device=bson.ObjectId(body['device']))
             data.save()
+            data = data.to_mongo()
         elif request.method == 'GET':
-            data = list(RawData.objects)
+            data = [obj.to_mongo() for obj in RawData.objects]
         elif request.method == 'PUT':
             _id = route_params['raw_data_id']
             data = RawData.objects(id=bson.ObjectId(_id))
             data.raw = body
             data.update()
+            data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['raw_data_id']
             data = RawData.objects(id=bson.ObjectId(_id))

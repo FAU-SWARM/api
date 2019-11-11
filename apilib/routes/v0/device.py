@@ -38,14 +38,16 @@ def device(*args, **kwargs):
         if request.method == 'POST':
             data = Device(name=body['name'], meta_data=body['meta_data'])
             data.save()
+            data = data.to_mongo()
         elif request.method == 'GET':
-            data = list(Device.objects)
+            data = [obj.to_mongo() for obj in Device.objects]
         elif request.method == 'PUT':
             _id = route_params['device_id']
             data = Device.objects(id=bson.ObjectId(_id))
             data.name = body['name']
             data.meta_data = body['meta_data']
             data.update()
+            data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['device_id']
             data = Device.objects(id=bson.ObjectId(_id))
