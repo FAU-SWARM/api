@@ -37,8 +37,7 @@ def raw_data(*args, **kwargs):
     error = None
     try:
         if request.method == 'POST':
-            device = Device.objects(id=body['device'])
-            data = RawData(raw=body['raw'], device=device)
+            data = RawData(raw=body['raw'], device=bson.ObjectId(body['device']))
             data.save()
         elif request.method == 'GET':
             data = list(RawData.objects)
