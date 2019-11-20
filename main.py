@@ -43,12 +43,16 @@ def main(args):
     HEADERS = [
         ('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS'),
         ('Access-Control-Allow-Credentials', 'true'),
-        ('Access-Control-Allow-Headers', 'Content-Type, Authorization, Credentials'),
     ]
     if args.dev:
-        HEADERS.insert(0, ('Access-Control-Allow-Origin', 'http://localhost:4200'))
+        if args.local:
+            HEADERS.insert(0, ('Access-Control-Allow-Origin', '*'))
+        else:
+            HEADERS.insert(0, ('Access-Control-Allow-Origin', 'http://localhost:4200'))
+            HEADERS.append(('Access-Control-Allow-Headers', 'Content-Type, Authorization, Credentials')),
     else:
         HEADERS.insert(0, ('Access-Control-Allow-Origin', '{}'.format(WEB_URI)))
+        HEADERS.append(('Access-Control-Allow-Headers', 'Content-Type, Authorization, Credentials')),
 
     app.config['args'] = args
     app.config['headers'] = HEADERS
@@ -110,6 +114,7 @@ if __name__ == "__main__":
     development = parser.add_argument_group()
     development.add_argument('-d', '--dev', action='store_true', help='Enable dev mode.')
     development.add_argument('--debug', action='store_true', help='Set the flask debug flag hi or low.')
+    development.add_argument('--local', action='store_true', help='Set the network and cors to respect localhost.')
 
     execution = parser.add_argument_group()
     execution.add_argument('-e', '--env', action='store_true', default=os.path.abspath('env.xml'), help='Env XML File')
