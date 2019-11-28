@@ -6,8 +6,8 @@
     "version" : "v0.0.0"
   },
   "servers" : [ {
-    "url" : "http://localhost:6969/api/v0",
-    "description" : "Azure VM"
+    "url" : "http://swarm-fau4214.eastus.cloudapp.azure.com:6969/api/v0",
+    "description" : "Production Azure VM"
   } ],
   "paths" : {
     "/authorization" : {
@@ -434,7 +434,7 @@
         }
       }
     },
-    "/raw-data" : {
+    "/raw_data" : {
       "get" : {
         "tags" : [ "Raw-Data" ],
         "description" : "Read information about a bunch of raw-datas",
@@ -521,7 +521,7 @@
         }
       }
     },
-    "/raw-data/{id}" : {
+    "/raw_data/{id}" : {
       "get" : {
         "tags" : [ "Raw-Data" ],
         "description" : "Read one raw-data by ID",
@@ -1163,6 +1163,9 @@
           "$ref" : "#/components/schemas/Document"
         }, {
           "properties" : {
+            "name" : {
+              "type" : "string"
+            },
             "description" : {
               "type" : "string"
             },
