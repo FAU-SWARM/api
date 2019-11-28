@@ -7,8 +7,7 @@ import bson
 from flask import (Blueprint, abort, request, jsonify, Response, session, current_app)
 
 # database lib imports
-from database.models.raw_data import RawData
-from database.models.device import Device
+from database.models.project import Project
 
 # app imports
 from apilib.lib import add_headers
@@ -18,18 +17,19 @@ FILE_DIR = os.path.dirname(__file__)
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
 
-raw_data_route = Blueprint('raw_data_route', __name__)
+project_route = Blueprint('project_route', __name__)
 
 
-@raw_data_route.route('raw_data', methods=['POST', 'GET', 'OPTIONS'])
-@raw_data_route.route('raw_data/<raw_data_id>', methods=['GET', 'PUT', 'DELETE', 'OPTIONS'])
-def raw_data(*args, **kwargs):
+@project_route.route('project', methods=['POST', 'GET', 'OPTIONS'])
+@project_route.route('project/<project_id>', methods=['GET', 'PUT', 'DELETE', 'OPTIONS'])
+def project(*args, **kwargs):
     args = current_app.config['args']
     headers = current_app.config['headers']
 
     response = Response()
     route_params = request.view_args
     get_params = request.args.to_dict(flat=False)
+    body = request.json
 
     message = []
     data = None
@@ -38,23 +38,24 @@ def raw_data(*args, **kwargs):
         if request.method == 'POST':
             body = request.json
 
-            data = RawData(raw=body['raw'], device=bson.ObjectId(body['device']))
+            data = Project(**body)
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
-            data = [obj.to_mongo() for obj in RawData.objects]
+            data = [obj.to_mongo() for obj in Project.objects]
         elif request.method == 'PUT':
             body = request.json
 
-            _id = route_params['raw_data_id']
-            data = RawData.objects(id=bson.ObjectId(_id))
-            data.project = bson.ObjectId(body['project'])
-            data.raw = body['raw']
+            _id = route_params['project_id']
+            data = Project.objects(id=bson.ObjectId(_id))
+            data.name = body['name']
+            data.description = body['description']
+            data.img = body['img']
             data.update()
             data = data.to_mongo()
         elif request.method == 'DELETE':
-            _id = route_params['raw_data_id']
-            data = RawData.objects(id=bson.ObjectId(_id))
+            _id = route_params['project_id']
+            data = Project.objects(id=bson.ObjectId(_id))
             data.delete()
         elif request.method == 'OPTIONS':
             pass
@@ -67,4 +68,5 @@ def raw_data(*args, **kwargs):
 
     response = jsonify(message=message, data=data, error=error)
     response = add_headers(response, headers=headers)
+    LOGGER.warning(vars(response))
     return response

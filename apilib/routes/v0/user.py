@@ -52,6 +52,7 @@ def user(*args, **kwargs):
             data.last_name = body['last_name']
             data.email = body['email']
             data.password = body['password']
+            data.authorization = body['authorization']
             data.update()
             data = data.to_mongo()
         elif request.method == 'DELETE':
