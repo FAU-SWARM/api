@@ -132,4 +132,6 @@ if __name__ == "__main__":
 
     args = augment_args(parser.parse_args())
 
+    print(vars(args))
+
     main(args)
