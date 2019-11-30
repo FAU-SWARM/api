@@ -10,6 +10,133 @@
     "description" : "Local Development"
   } ],
   "paths" : {
+    "/ping" : {
+      "get" : {
+        "tags" : [ "Utility" ],
+        "description" : "Ping returns 'pong'.",
+        "responses" : {
+          "200" : {
+            "description" : "pong",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "string"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Utility" ],
+        "description" : "Ping returns 'pong'.",
+        "responses" : {
+          "200" : {
+            "description" : "pong",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "string"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Utility" ],
+        "description" : "Ping returns 'pong'.",
+        "responses" : {
+          "200" : {
+            "description" : "pong",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "string"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Utility" ],
+        "description" : "Ping returns 'pong'.",
+        "responses" : {
+          "200" : {
+            "description" : "pong",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "string"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "options" : {
+        "tags" : [ "Utility" ],
+        "description" : "Ping returns 'pong'.",
+        "responses" : {
+          "200" : {
+            "description" : "pong",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/API-Response"
+                  }, {
+                    "properties" : {
+                      "data" : {
+                        "type" : "string"
+                      }
+                    }
+                  } ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/authorization" : {
       "get" : {
         "tags" : [ "Authorization" ],

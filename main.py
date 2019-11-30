@@ -17,6 +17,7 @@ from apilib.lib import (
     console_log, file_log,
     GOD_FILE_FORMAT, GOD_FORMAT
 )
+from apilib.routes.v0 import ping_route
 from apilib.routes.v0.authorization import authorization_route
 from apilib.routes.v0.device import device_route
 from apilib.routes.v0.raw_data import raw_data_route
@@ -61,6 +62,7 @@ def main(args):
     app.config['SESSION_TYPE'] = 'filesystem'
 
     # v0
+    app.register_blueprint(ping_route, url_prefix='/{}'.format(API_ENDPOINT))
     app.register_blueprint(authorization_route, url_prefix='/{}'.format(API_ENDPOINT))
     app.register_blueprint(device_route, url_prefix='/{}'.format(API_ENDPOINT))
     app.register_blueprint(raw_data_route, url_prefix='/{}'.format(API_ENDPOINT))
