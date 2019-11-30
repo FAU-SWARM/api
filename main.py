@@ -34,6 +34,7 @@ def main(args):
 
     console_log([__name__, 'flask', 'apilib', 'database'], level=args.loglevel)
     file_log([__name__, 'flask', 'apilib', 'database'], level=args.loglevel, filename=args.logfile)
+    LOGGER.info('log at {}'.format(args.logfile))
 
     app = Flask(__name__)
     app.logger = LOGGER
