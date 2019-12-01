@@ -29,7 +29,8 @@ def device(*args, **kwargs):
     response = Response()
     route_params = request.view_args
     get_params = request.args.to_dict(flat=False)
-    body = request.json
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        body = request.json
 
     message = []
     data = None

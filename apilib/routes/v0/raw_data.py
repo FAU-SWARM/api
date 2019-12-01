@@ -30,22 +30,20 @@ def raw_data(*args, **kwargs):
     response = Response()
     route_params = request.view_args
     get_params = request.args.to_dict(flat=False)
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        body = request.json
 
     message = []
     data = None
     error = None
     try:
         if request.method == 'POST':
-            body = request.json
-
             data = RawData(raw=body['raw'], device=bson.ObjectId(body['device']))
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
             data = [obj.to_mongo() for obj in RawData.objects]
         elif request.method == 'PUT':
-            body = request.json
-
             _id = route_params['raw_data_id']
             data = RawData.objects(id=bson.ObjectId(_id))
             data.project = bson.ObjectId(body['project'])

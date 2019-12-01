@@ -29,23 +29,20 @@ def user(*args, **kwargs):
     response = Response()
     route_params = request.view_args
     get_params = request.args.to_dict(flat=False)
-    body = request.json
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        body = request.json
 
     message = []
     data = None
     error = None
     try:
         if request.method == 'POST':
-            body = request.json
-
             data = User(**body)
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
             data = [obj.to_mongo() for obj in User.objects]
         elif request.method == 'PUT':
-            body = request.json
-
             _id = route_params['user_id']
             data = User.objects(id=bson.ObjectId(_id))
             data.first_name = body['first_name']

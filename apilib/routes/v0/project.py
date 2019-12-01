@@ -29,7 +29,8 @@ def project(*args, **kwargs):
     response = Response()
     route_params = request.view_args
     get_params = request.args.to_dict(flat=False)
-    body = request.json
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        body = request.json
 
     message = []
     data = None
@@ -51,6 +52,7 @@ def project(*args, **kwargs):
             data.name = body['name']
             data.description = body['description']
             data.img = body['img']
+            data.link = body['link']
             data.update()
             data = data.to_mongo()
         elif request.method == 'DELETE':
