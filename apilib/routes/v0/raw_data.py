@@ -47,8 +47,10 @@ def raw_data(*args, **kwargs):
             _id = route_params['raw_data_id']
             data = RawData.objects(id=bson.ObjectId(_id))
             data.project = bson.ObjectId(body['project'])
-            data.raw = body['raw']
-            data.update()
+            for attr in ['raw']:
+                if body.get(attr) is not None:
+                    setattr(data, attr, body[attr])
+            data.save()
             data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['raw_data_id']

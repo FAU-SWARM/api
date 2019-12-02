@@ -15,7 +15,8 @@ from mongoengine import connect
 from apilib.lib import (
     json, AllEncoder, xml_to_json, dict_to_object,
     console_log, file_log,
-    GOD_FILE_FORMAT, GOD_FORMAT
+    GOD_FILE_FORMAT, GOD_FORMAT,
+    augment_args
 )
 from apilib.routes.v0 import ping_route
 from apilib.routes.v0.authorization import authorization_route
@@ -98,21 +99,6 @@ def main(args):
         exit(0)
     except Exception as e:
         raise e
-
-
-def augment_args(args):
-    if args.env:
-        dick = xml_to_json(args.env)
-        obj = dict_to_object(dick)
-        dick = obj.to_dict()
-        args.env = obj
-
-    assert args.loglevel in list(logging._nameToLevel.keys())
-    args.logdir = os.path.abspath(args.logdir)
-    if not os.path.isdir(args.logdir):
-        os.makedirs(args.logdir)
-    args.logfile = os.path.join(args.logdir, 'api-{}.log'.format(datetime.datetime.now().strftime(GOD_FILE_FORMAT)))
-    return args
 
 
 if __name__ == "__main__":

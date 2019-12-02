@@ -49,9 +49,11 @@ def device(*args, **kwargs):
 
             _id = route_params['device_id']
             data = Device.objects(id=bson.ObjectId(_id))
-            data.name = body['name']
-            data.meta_data = body['meta_data']
-            data.update()
+            data = data[0]
+            for attr in ['name', 'meta_data']:
+                if body.get(attr) is not None:
+                    setattr(data, attr, body[attr])
+            data.save()
             data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['device_id']

@@ -49,8 +49,10 @@ def authorization(*args, **kwargs):
 
             _id = route_params['authorization_id']
             data = Authorization.objects(id=bson.ObjectId(_id))
-            data.name = body['name']
-            data.update()
+            for attr in ['name']:
+                if body.get(attr) is not None:
+                    setattr(data, attr, body[attr])
+            data.save()
             data = data.to_mongo()
         elif request.method == 'DELETE':
             _id = route_params['authorization_id']

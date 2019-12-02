@@ -250,3 +250,20 @@ def add_headers(response, headers=[]):
         response.headers.add(*header)
 
     return response
+
+
+def augment_args(args):
+    if args.env:
+        dick = xml_to_json(args.env)
+        obj = dict_to_object(dick)
+        dick = obj.to_dict()
+        args.env = obj
+
+    assert args.loglevel in list(logging._nameToLevel.keys())
+    args.logdir = os.path.abspath(args.logdir)
+    if not os.path.isdir(args.logdir):
+        os.makedirs(args.logdir)
+    args.logfile = os.path.join(
+        args.logdir, 'api-{}.log'.format(datetime.datetime.now().strftime(GOD_FILE_FORMAT))
+    )
+    return args
