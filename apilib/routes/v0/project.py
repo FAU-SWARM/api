@@ -43,7 +43,14 @@ def project(*args, **kwargs):
             data.save()
             data = data.to_mongo()
         elif request.method == 'GET':
-            data = [obj.to_mongo() for obj in Project.objects]
+            _id = route_params.get('project_id')
+            if _id is not None:
+                data = Project.objects(id=bson.ObjectId(_id))
+                if len(data) == 1:
+                    data = data[0].to_mongo()
+            else:
+                data = [obj.to_mongo() for obj in Project.objects]
+
         elif request.method == 'PUT':
             body = request.json
 
@@ -58,7 +65,7 @@ def project(*args, **kwargs):
         elif request.method == 'DELETE':
             _id = route_params['project_id']
             data = Project.objects(id=bson.ObjectId(_id))
-            data.delete()
+            data = [data.delete()]
         elif request.method == 'OPTIONS':
             pass
         else:
@@ -70,5 +77,5 @@ def project(*args, **kwargs):
 
     response = jsonify(message=message, data=data, error=error)
     response = add_headers(response, headers=headers)
-    LOGGER.warning(vars(response))
+    # LOGGER.warning(vars(response))
     return response
