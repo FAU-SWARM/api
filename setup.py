@@ -33,7 +33,7 @@ setup(
     version=version,
     description='API Library',
     long_description=long_description,
-    author='Chris Carl',
+    author='',
     author_email='ccarl2@fau.edu',
     url='https://github.com/FAU-SWARM/api',
     packages=find_packages(
