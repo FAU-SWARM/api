@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "SWARM API",
-    "description" : "API for the SWARM project. FAU CEN4214 2019F",
+    "description" : "API for the SWARM project. FAU CEN 2019F",
     "version" : "v0.0.0"
   },
   "servers" : [ {

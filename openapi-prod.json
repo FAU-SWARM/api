@@ -2,11 +2,11 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "SWARM API",
-    "description" : "API for the SWARM project. FAU CEN4214 2019F",
+    "description" : "API for the SWARM project. FAU CEN 2019F",
     "version" : "v0.0.0"
   },
   "servers" : [ {
-    "url" : "http://swarm-fau4214.eastus.cloudapp.azure.com:6969/api/v0",
+    "url" : "http://swarm-fau.eastus.cloudapp.azure.com:6969/api/v0",
     "description" : "Production Azure VM"
   } ],
   "paths" : {
